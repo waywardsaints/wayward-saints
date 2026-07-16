@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAYWARD SAINTS — A Southern Gothic Supernatural Series</title>
+<meta name="description" content="Clarksdale, Mississippi. 1911. A boy prays at the crossroads and something older than heaven answers. Wayward Saints — an ongoing Southern Gothic supernatural series.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch:#130d09;        /* scorched wood */
+    --pitch-2:#1b120c;      /* ember shadow */
+    --bone:#e6dbc4;         /* peeling church paint */
+    --bone-dim:#b8ac93;     /* dust on bone */
+    --blood:#8e1e1a;        /* dried blood */
+    --blood-bright:#c22f24; /* fresh */
+    --lantern:#d2a04a;      /* Delilah's gold */
+    --smoke:#6d5f4e;        /* delta dust */
+    --display:'IM Fell English', serif;
+    --display-sc:'IM Fell English SC', serif;
+    --body:'EB Garamond', serif;
+    --type:'Special Elite', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--pitch);
+    color:var(--bone);
+    font-family:var(--body);
+    font-size:1.15rem;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  /* paper grain + vignette over everything */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:50;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  body::after{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:51;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(8,4,2,.55) 100%);
+  }
+  ::selection{background:var(--blood);color:var(--bone)}
+
+  a{color:var(--lantern);text-decoration:none;border-bottom:1px solid rgba(210,160,74,.35)}
+  a:hover{color:var(--bone);border-bottom-color:var(--bone)}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--lantern);outline-offset:3px}
+
+  /* ============ NAV ============ */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1rem 2rem;
+    background:linear-gradient(to bottom, rgba(19,13,9,.92), rgba(19,13,9,0));
+  }
+  nav .mark{
+    font-family:var(--display-sc);
+    font-size:1.05rem; letter-spacing:.22em;
+    color:var(--bone);
+    border:none;
+  }
+  nav .mark span{color:var(--blood-bright)}
+  nav ul{display:flex; gap:1.8rem; list-style:none}
+  nav ul a{
+    font-family:var(--type);
+    font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--bone-dim); border:none;
+  }
+  nav ul a:hover{color:var(--lantern)}
+  @media(max-width:680px){ nav ul{display:none} }
+
+  /* ============ HERO ============ */
+  header{
+    min-height:100svh;
+    position:relative;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:6rem 1.5rem 4rem;
+  }
+  .crossroads{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    z-index:0;
+  }
+  .heat{
+    position:absolute; left:50%; top:62%;
+    width:520px; height:520px; max-width:90vw;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(194,47,36,.16) 0%, rgba(210,160,74,.07) 35%, transparent 70%);
+    filter:blur(6px);
+    animation:lantern 7s ease-in-out infinite;
+    z-index:1; pointer-events:none;
+  }
+  @keyframes lantern{
+    0%,100%{opacity:.75; transform:translate(-50%,-50%) scale(1)}
+    43%{opacity:1; transform:translate(-50%,-50%) scale(1.06)}
+    47%{opacity:.6}
+    52%{opacity:.95}
+    78%{opacity:.8; transform:translate(-50%,-50%) scale(.98)}
+  }
+  .hero-inner{position:relative; z-index:2; max-width:900px}
+  .hero-mark{
+    width:58px; height:58px;
+    color:var(--bone);
+    margin-bottom:1.4rem;
+    filter:drop-shadow(0 0 14px rgba(194,47,36,.4));
+  }
+  .eyebrow{
+    font-family:var(--type);
+    font-size:.78rem; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--lantern);
+    margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(3.4rem, 11vw, 8.2rem);
+    line-height:.95;
+    letter-spacing:.02em;
+    color:var(--bone);
+    text-shadow:0 0 60px rgba(194,47,36,.25);
+  }
+  h1 .saints{
+    display:block;
+    color:var(--blood-bright);
+    font-style:italic;
+    text-shadow:0 0 40px rgba(194,47,36,.4);
+  }
+  .tagline{
+    margin:2.4rem auto 0;
+    max-width:34ch;
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(1.25rem, 2.6vw, 1.7rem);
+    line-height:1.55;
+    color:var(--bone-dim);
+  }
+  .tagline em{color:var(--lantern); font-style:italic}
+  .tagline .damn{
+    display:block; margin-top:.5rem;
+    font-size:.8em; color:var(--smoke);
+  }
+  .locus{
+    margin-top:2.6rem;
+    font-family:var(--type);
+    font-size:.75rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--smoke);
+  }
+  .locus b{color:var(--bone-dim); font-weight:400}
+  .down{
+    position:absolute; bottom:2rem; left:50%;
+    transform:translateX(-50%);
+    z-index:2;
+    font-family:var(--type); font-size:.68rem;
+    letter-spacing:.3em; text-transform:uppercase;
+    color:var(--smoke); border:none;
+    animation:sink 3s ease-in-out infinite;
+  }
+  @keyframes sink{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ============ SECTIONS ============ */
+  section{
+    max-width:1060px;
+    margin:0 auto;
+    padding:6.5rem 1.5rem;
+  }
+  .rule{
+    display:flex; align-items:center; gap:1.2rem;
+    margin-bottom:3.2rem;
+  }
+  .rule::before,.rule::after{
+    content:""; flex:1; height:1px;
+    background:linear-gradient(90deg, transparent, var(--smoke));
+  }
+  .rule::after{background:linear-gradient(90deg, var(--smoke), transparent)}
+  .rule .roadmark{
+    width:34px; height:34px; flex:none;
+    color:var(--blood-bright);
+    filter:drop-shadow(0 0 8px rgba(194,47,36,.35));
+  }
+  h2{
+    font-family:var(--display-sc);
+    font-weight:400;
+    font-size:clamp(1.9rem, 4.4vw, 2.9rem);
+    letter-spacing:.1em;
+    text-align:center;
+    color:var(--bone);
+    margin-bottom:.6rem;
+  }
+  .sub{
+    text-align:center;
+    font-family:var(--type);
+    font-size:.74rem; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--lantern);
+    margin-bottom:3rem;
+  }
+  .prose{max-width:62ch; margin:0 auto}
+  .prose p{margin-bottom:1.4rem; color:var(--bone-dim)}
+  .prose p:first-of-type::first-letter{
+    font-family:var(--display);
+    font-size:3.4em; float:left;
+    line-height:.82; padding-right:.12em;
+    color:var(--blood-bright);
+  }
+  .prose strong{color:var(--bone); font-weight:500}
+
+  /* typewriter script excerpt */
+  .script{
+    margin:3.4rem auto 0;
+    max-width:640px;
+    background:var(--pitch-2);
+    border:1px solid rgba(109,95,78,.35);
+    padding:2.2rem 2.4rem;
+    font-family:var(--type);
+    font-size:.92rem;
+    line-height:1.9;
+    color:var(--bone-dim);
+    position:relative;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+  .script::before{
+    content:"FROM THE SCRIPT — ISSUE #1";
+    position:absolute; top:-.7rem; left:1.4rem;
+    background:var(--pitch);
+    padding:0 .8rem;
+    font-size:.62rem; letter-spacing:.3em;
+    color:var(--lantern);
+  }
+  .script .cap{color:var(--bone)}
+  .script .red{color:var(--blood-bright)}
+
+  /* ============ CHARACTERS ============ */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:1.4rem;
+  }
+  .card{
+    background:linear-gradient(160deg, var(--pitch-2), #150e08);
+    border:1px solid rgba(109,95,78,.3);
+    padding:2.2rem 1.9rem 2rem;
+    position:relative;
+    transition:border-color .4s ease, transform .4s ease;
+  }
+  .card::after{ /* the brand mark, inked in the corner */
+    content:"";
+    position:absolute; top:1rem; right:1rem;
+    width:26px; height:26px;
+    background:rgba(142,30,26,.6);
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath d='M50 43 C49.2 33 50.8 24 49.5 15' stroke-width='4.2'/%3E%3Cpath d='M49.5 15 c-.8 -3.2 1.8 -5.4 4 -3.8 c2 1.4 .8 4.6 -1.6 4.2' stroke-width='2.2'/%3E%3Cpath d='M50 57 C50.8 67 49.4 76 50.6 86' stroke-width='4.2'/%3E%3Cpath d='M50.6 86 c1 3.2 -1.6 5.6 -3.9 4 c-2 -1.5 -.7 -4.7 1.7 -4.2' stroke-width='2.2'/%3E%3Cpath d='M43 50 C33 49.4 24 50.6 15 49.6' stroke-width='4.2'/%3E%3Cpath d='M15 49.6 c-3.2 -.9 -5.4 1.7 -3.8 3.9 c1.4 2 4.6 .8 4.2 -1.6' stroke-width='2.2'/%3E%3Cpath d='M57 50 C67 50.6 76 49.2 86 50.2' stroke-width='4.2'/%3E%3Cpath d='M86 50.2 c3.2 .9 5.5 -1.6 3.9 -3.9 c-1.5 -2 -4.7 -.7 -4.2 1.7' stroke-width='2.2'/%3E%3Cpath d='M50 44 L50 56 M44 50 L56 50' stroke-width='7.5'/%3E%3Cpath d='M53 50 a3 3 0 1 1 -3 -3 a5.5 5.5 0 1 0 5.5 5.5' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath d='M50 43 C49.2 33 50.8 24 49.5 15' stroke-width='4.2'/%3E%3Cpath d='M49.5 15 c-.8 -3.2 1.8 -5.4 4 -3.8 c2 1.4 .8 4.6 -1.6 4.2' stroke-width='2.2'/%3E%3Cpath d='M50 57 C50.8 67 49.4 76 50.6 86' stroke-width='4.2'/%3E%3Cpath d='M50.6 86 c1 3.2 -1.6 5.6 -3.9 4 c-2 -1.5 -.7 -4.7 1.7 -4.2' stroke-width='2.2'/%3E%3Cpath d='M43 50 C33 49.4 24 50.6 15 49.6' stroke-width='4.2'/%3E%3Cpath d='M15 49.6 c-3.2 -.9 -5.4 1.7 -3.8 3.9 c1.4 2 4.6 .8 4.2 -1.6' stroke-width='2.2'/%3E%3Cpath d='M57 50 C67 50.6 76 49.2 86 50.2' stroke-width='4.2'/%3E%3Cpath d='M86 50.2 c3.2 .9 5.5 -1.6 3.9 -3.9 c-1.5 -2 -4.7 -.7 -4.2 1.7' stroke-width='2.2'/%3E%3Cpath d='M50 44 L50 56 M44 50 L56 50' stroke-width='7.5'/%3E%3Cpath d='M53 50 a3 3 0 1 1 -3 -3 a5.5 5.5 0 1 0 5.5 5.5' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+    transition:background .4s ease, filter .4s ease;
+  }
+  .card:hover{
+    border-color:rgba(194,47,36,.5);
+    transform:translateY(-4px);
+  }
+  .card:hover::after{
+    background:var(--blood-bright);
+    filter:drop-shadow(0 0 6px rgba(194,47,36,.7));
+  }
+  .card .role{
+    font-family:var(--type);
+    font-size:.66rem; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--lantern);
+    margin-bottom:.7rem;
+  }
+  .card h3{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:1.75rem;
+    color:var(--bone);
+    margin-bottom:.9rem;
+  }
+  .card p{
+    font-size:1.02rem; line-height:1.65;
+    color:var(--bone-dim);
+    margin-bottom:1.1rem;
+  }
+  .card .line{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:1rem;
+    color:var(--smoke);
+    border-left:2px solid var(--blood);
+    padding-left:.9rem;
+  }
+  .card.delilah{border-color:rgba(210,160,74,.35)}
+  .card.delilah:hover{border-color:rgba(210,160,74,.7)}
+  .card.delilah .role{color:var(--blood-bright)}
+  .card.delilah h3{color:var(--lantern)}
+
+  /* ============ THE ROAD (lore) ============ */
+  .laws{
+    max-width:720px; margin:0 auto;
+    display:flex; flex-direction:column; gap:0;
+  }
+  .law{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:1.6rem;
+    padding:2.2rem 0;
+    border-bottom:1px solid rgba(109,95,78,.25);
+    align-items:start;
+  }
+  .law:last-child{border-bottom:none}
+  .law .glyph{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:2rem;
+    color:var(--blood-bright);
+    text-align:center;
+    line-height:1.1;
+    padding-top:.15rem;
+  }
+  .law h3{
+    font-family:var(--display-sc);
+    font-weight:400;
+    font-size:1.3rem;
+    letter-spacing:.08em;
+    color:var(--bone);
+    margin-bottom:.5rem;
+  }
+  .law p{color:var(--bone-dim); font-size:1.05rem}
+
+  /* ============ SERIES ============ */
+  .series-band{
+    background:var(--pitch-2);
+    border-top:1px solid rgba(109,95,78,.25);
+    border-bottom:1px solid rgba(109,95,78,.25);
+  }
+  .facts{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:2.4rem;
+    max-width:880px; margin:3rem auto 0;
+    text-align:center;
+  }
+  .fact .k{
+    font-family:var(--type);
+    font-size:.68rem; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--lantern);
+    margin-bottom:.6rem;
+  }
+  .fact .v{
+    font-family:var(--display);
+    font-size:1.5rem;
+    color:var(--bone);
+  }
+
+  /* ============ FOOTER / CTA ============ */
+  footer{
+    text-align:center;
+    padding:6rem 1.5rem 4rem;
+    position:relative;
+  }
+  footer .call{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(1.4rem, 3.4vw, 2.1rem);
+    color:var(--bone);
+    max-width:26ch;
+    margin:0 auto 2.2rem;
+  }
+  .btn{
+    display:inline-block;
+    font-family:var(--type);
+    font-size:.8rem; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--bone);
+    border:1px solid var(--blood-bright);
+    padding:1rem 2.4rem;
+    transition:background .35s ease, color .35s ease, box-shadow .35s ease;
+  }
+  .btn:hover{
+    background:var(--blood);
+    color:var(--bone);
+    box-shadow:0 0 40px rgba(194,47,36,.35);
+    border-bottom-color:var(--blood-bright);
+  }
+  footer .fine{
+    margin-top:3.4rem;
+    font-family:var(--type);
+    font-size:.66rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--smoke);
+  }
+
+  /* scroll reveal */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s ease}
+  .reveal.in{opacity:1; transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    .heat,.down{animation:none}
+    .reveal{opacity:1; transform:none; transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- Wayward Saints brand mark: hand-drawn crossroads with curled tips and center spiral -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="roadmark" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-linecap="round">
+      <path d="M50 43 C49.2 33 50.8 24 49.5 15" stroke-width="4.2"/>
+      <path d="M49.5 15 c-.8 -3.2 1.8 -5.4 4 -3.8 c2 1.4 .8 4.6 -1.6 4.2" stroke-width="2.2"/>
+      <path d="M50 57 C50.8 67 49.4 76 50.6 86" stroke-width="4.2"/>
+      <path d="M50.6 86 c1 3.2 -1.6 5.6 -3.9 4 c-2 -1.5 -.7 -4.7 1.7 -4.2" stroke-width="2.2"/>
+      <path d="M43 50 C33 49.4 24 50.6 15 49.6" stroke-width="4.2"/>
+      <path d="M15 49.6 c-3.2 -.9 -5.4 1.7 -3.8 3.9 c1.4 2 4.6 .8 4.2 -1.6" stroke-width="2.2"/>
+      <path d="M57 50 C67 50.6 76 49.2 86 50.2" stroke-width="4.2"/>
+      <path d="M86 50.2 c3.2 .9 5.5 -1.6 3.9 -3.9 c-1.5 -2 -4.7 -.7 -4.2 1.7" stroke-width="2.2"/>
+      <path d="M50 44 L50 56 M44 50 L56 50" stroke-width="7.5" opacity=".92"/>
+      <path d="M53 50 a3 3 0 1 1 -3 -3 a5.5 5.5 0 1 0 5.5 5.5" stroke-width="2"/>
+    </g>
+  </symbol>
+</svg>
+
+<nav>
+  <a class="mark" href="#top">WAYWARD <span>SAINTS</span></a>
+  <ul>
+    <li><a href="#debt">The Debt</a></li>
+    <li><a href="#saints">The Saints</a></li>
+    <li><a href="#road">The Road</a></li>
+    <li><a href="#series">The Series</a></li>
+  </ul>
+</nav>
+
+<header id="top">
+  <!-- crossroads: two dirt roads meeting under a low moon -->
+  <svg class="crossroads" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0d0806"/>
+        <stop offset=".55" stop-color="#170e08"/>
+        <stop offset="1" stop-color="#1e130a"/>
+      </linearGradient>
+      <radialGradient id="moon" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#e6dbc4" stop-opacity=".14"/>
+        <stop offset=".4" stop-color="#e6dbc4" stop-opacity=".05"/>
+        <stop offset="1" stop-color="#e6dbc4" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#sky)"/>
+    <circle cx="1130" cy="180" r="200" fill="url(#moon)"/>
+    <circle cx="1130" cy="180" r="46" fill="#d8ccb2" opacity=".18"/>
+    <!-- horizon fields -->
+    <path d="M0 620 Q 360 600 720 615 T 1440 610 L1440 900 L0 900 Z" fill="#0f0905"/>
+    <!-- road running away to horizon -->
+    <path d="M690 900 L716 618 L724 618 L750 900 Z" fill="#241609" opacity=".9"/>
+    <!-- crossing road -->
+    <path d="M0 760 Q 720 700 1440 745 L1440 785 Q 720 745 0 805 Z" fill="#241609" opacity=".85"/>
+    <!-- wheel ruts -->
+    <path d="M702 900 L718 640" stroke="#0d0704" stroke-width="3" fill="none" opacity=".6"/>
+    <path d="M738 900 L722 640" stroke="#0d0704" stroke-width="3" fill="none" opacity=".6"/>
+    <!-- telegraph poles like grave markers -->
+    <g stroke="#2a1b0e" stroke-width="5">
+      <path d="M320 700 V 560 M296 585 H344"/>
+      <path d="M1120 690 V 575 M1100 597 H1140"/>
+    </g>
+    <!-- dead tree -->
+    <path d="M170 640 C168 560 175 520 160 470 M160 470 C150 440 120 430 105 400 M160 470 C175 435 205 430 215 395 M160 505 C140 490 125 495 110 480"
+      stroke="#1f1309" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div class="heat" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <svg class="roadmark hero-mark" aria-hidden="true"><use href="#roadmark"/></svg>
+    <p class="eyebrow">A Southern Gothic Supernatural Series</p>
+    <h1>WAYWARD<span class="saints">SAINTS</span></h1>
+    <p class="tagline">&ldquo;I don&rsquo;t believe in heaven. I don&rsquo;t believe in hell. But I believe in <em>her</em>&hellip;<span class="damn">and that&rsquo;s enough to damn me.&rdquo;</span></p>
+    <p class="locus"><b>Clarksdale, Mississippi</b> &nbsp;·&nbsp; 1911–1917</p>
+  </div>
+  <a class="down" href="#debt">Walk the road ↓</a>
+</header>
+
+<section id="debt" class="reveal">
+  <div class="rule"><svg class="roadmark" aria-hidden="true"><use href="#roadmark"/></svg></div>
+  <h2>The Debt</h2>
+  <p class="sub">Every prayer gets answered. Not every answer comes from heaven.</p>
+  <div class="prose">
+    <p>Job Johnson is sixteen, a preacher&rsquo;s son in a Delta town built to see his family broken. When the world takes everything but his breath, he walks to the crossroads at midnight — not looking for the Devil, like his daddy warned. Looking for <strong>mercy</strong>. For anything that would take the weight off his family, even if it meant putting it on him.</p>
+    <p>The road listens. His father&rsquo;s cough is gone by morning. There&rsquo;s food on the table, money in the collection plate, laughter back in the house. But pain doesn&rsquo;t vanish. It <strong>moves</strong>. Every blessing carves a hole in somebody else&rsquo;s life, and the town starts to notice the Smith family is too lucky for its own good.</p>
+    <p>Then she appears — a girl his age with a smile too sweet to be safe, born from the prayer itself. <strong>Delilah</strong> isn&rsquo;t the Devil. She&rsquo;s what&rsquo;s left when heaven stops listening. She loves Job with everything she is. And her love is the debt that never stops collecting.</p>
+  </div>
+
+  <div class="script reveal">
+    <p><span class="cap">CAPTION (JOB):</span> I used to pray for mercy. Now I don&rsquo;t pray at all.</p>
+    <p><span class="cap">CAPTION (JOB):</span> &lsquo;Cause I know where my prayers go. They don&rsquo;t rise. They don&rsquo;t fall.</p>
+    <p><span class="cap">CAPTION (JOB):</span> They sink into the dirt. Into the crossroads. <span class="red">And she&rsquo;s the only one who listens.</span></p>
+  </div>
+</section>
+
+<section id="saints" class="reveal">
+  <div class="rule"><svg class="roadmark" aria-hidden="true"><use href="#roadmark"/></svg></div>
+  <h2>The Saints</h2>
+  <p class="sub">Bound by curse, by blood, by choice</p>
+  <div class="cards">
+    <div class="card">
+      <p class="role">The One Who Begged</p>
+      <h3>Robert &ldquo;Job&rdquo; Johnson</h3>
+      <p>Sixteen, a pastor&rsquo;s son, and compassionate to a fault — he&rsquo;d rather suffer himself than watch someone he loves get hurt. So he asked the road to carry his family&rsquo;s burdens, and got exactly what he asked for. Every step he takes, somebody pays. Every breath he draws, he owes.</p>
+      <p class="line">&ldquo;Forgiveness don&rsquo;t keep count. The road does.&rdquo;</p>
+    </div>
+    <div class="card delilah">
+      <p class="role">The One Who Answered</p>
+      <h3>Delilah</h3>
+      <p>She appeared one day at Job&rsquo;s side, amber-gold eyes and a smile too sweet to be safe, speaking like she&rsquo;s known him far longer than should be possible. She hums old blues when she thinks nobody&rsquo;s listening. To Delilah, love, loyalty, protection, and possession blur into one thing — and she cares completely.</p>
+      <p class="line">&ldquo;You still breathin&rsquo;, sugar. That means you still mine.&rdquo;</p>
+    </div>
+    <div class="card">
+      <p class="role">The Bluesman</p>
+      <h3>Zeke Turner</h3>
+      <p>A blind guitarist who keeps rhythm with ghosts. His strings call up three starving hounds of shadow and ember — and he&rsquo;s played too many funerals for folks who deserved better.</p>
+      <p class="line">&ldquo;Some songs ain&rsquo;t meant to end.&rdquo;</p>
+    </div>
+    <div class="card">
+      <p class="role">Mercy&rsquo;s Keeper</p>
+      <h3>Ruthie Mae</h3>
+      <p>A woman of half-prayers and steady hands who takes other people&rsquo;s pain into her own body. She still believes the broken can be mended. The road keeps testing her on it.</p>
+      <p class="line">&ldquo;Ain&rsquo;t no heaven without mercy, and ain&rsquo;t no mercy without someone payin&rsquo; for it.&rdquo;</p>
+    </div>
+    <div class="card">
+      <p class="role">The Unchained</p>
+      <h3>Eli Booker</h3>
+      <p>Born guilty, according to every law that ever looked at him. He carries the Freedom Train — a spectral engine full of every soul that died chasing liberty, screaming down rails only he can lay.</p>
+      <p class="line">&ldquo;Law ain&rsquo;t justice. It&rsquo;s just the road wearing a badge.&rdquo;</p>
+    </div>
+    <div class="card">
+      <p class="role">The Shepherd</p>
+      <h3>Rev. Horace Johnson</h3>
+      <p>Job&rsquo;s father. A pastor whose voice can shake the dust off the rafters, spending his life guiding others through pain while wrestling with doubts he refuses to admit. His Bible is never far from reach — even when it stops answering.</p>
+      <p class="line">&ldquo;The Devil waits at the crossroads, son. Don&rsquo;t you ever go lookin&rsquo; for him.&rdquo;</p>
+    </div>
+    <div class="card">
+      <p class="role">The Foundation</p>
+      <h3>Deborah Johnson</h3>
+      <p>Job&rsquo;s mother, and the emotional center of the family. She doesn&rsquo;t always need answers — she keeps moving forward because someone has to, carrying burdens quietly so her family won&rsquo;t have to. She touches her cross when she&rsquo;s frightened. Lately she touches it a lot.</p>
+      <p class="line">&ldquo;Lord Almighty&hellip; my baby&rsquo;s awake.&rdquo;</p>
+    </div>
+  </div>
+</section>
+
+<section id="road" class="reveal">
+  <div class="rule"><svg class="roadmark" aria-hidden="true"><use href="#roadmark"/></svg></div>
+  <h2>The Law of the Road</h2>
+  <p class="sub">The rules the dirt lives by</p>
+  <div class="laws">
+    <div class="law">
+      <div class="glyph">I</div>
+      <div>
+        <h3>The Road Always Listens</h3>
+        <p>Heaven answers when it feels like it. The road answers every time — quicker, older, and without a lick of mercy. It doesn&rsquo;t care what name you pray under.</p>
+      </div>
+    </div>
+    <div class="law">
+      <div class="glyph">II</div>
+      <div>
+        <h3>Pain Doesn&rsquo;t Vanish. It Moves.</h3>
+        <p>Every blessing is borrowed from somebody else&rsquo;s sorrow. A healed cough becomes a neighbor&rsquo;s flood. A full table becomes another family&rsquo;s grave. That&rsquo;s the law. Nobody made it. The road just follows it.</p>
+      </div>
+    </div>
+    <div class="law">
+      <div class="glyph">III</div>
+      <div>
+        <h3>Every Road Has Its Toll</h3>
+        <p>Those the road has touched carry the Mark of the Road — crossed lines meeting where the dirt breathes. It has no chosen place. It brands itself where it pleases, and no two souls wear it the same. The Mark keeps count. Forgiveness doesn&rsquo;t.</p>
+      </div>
+    </div>
+    <div class="law">
+      <div class="glyph">IV</div>
+      <div>
+        <h3>The Law Don&rsquo;t Sleep</h3>
+        <p>Neither does the road. Sheriffs, preachers, and hooded men all claim to speak for order in the Delta. The road hears them too — and it keeps a ledger no courthouse ever will.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="series-band">
+  <section id="series" class="reveal">
+    <div class="rule"><svg class="roadmark" aria-hidden="true"><use href="#roadmark"/></svg></div>
+    <h2>The Series</h2>
+    <p class="sub">An ongoing series</p>
+    <div class="prose">
+      <p><strong>Wayward Saints</strong> is a Southern Gothic supernatural drama set in the Mississippi Delta between 1911 and 1917 — where Jim Crow is the loudest law in the land, the blues is being born in juke joints and cotton rows, and something older than scripture waits where the dirt roads cross. It&rsquo;s a story about faith after heaven goes quiet, love that costs more than hate, and what a boy owes the world for the sin of surviving it.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><p class="k">Format</p><p class="v">Ongoing Series</p></div>
+      <div class="fact"><p class="k">Genre</p><p class="v">Southern Gothic Horror&nbsp;Fantasy</p></div>
+      <div class="fact"><p class="k">Setting</p><p class="v">Clarksdale, MS — 1911</p></div>
+      <div class="fact"><p class="k">Status</p><p class="v">Issue #1 In&nbsp;Development</p></div>
+    </div>
+  </section>
+</div>
+
+<footer class="reveal">
+  <p class="call">The road is listening.<br>Might as well say somethin&rsquo;.</p>
+  <a class="btn" href="https://www.kickstarter.com/projects/waywardsaintscomics/wayward-saints-issue-1" target="_blank" rel="noopener">Follow the Road</a>
+  <p class="fine">Wayward Saints © 2026 · All debts collected in due time</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
